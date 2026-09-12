@@ -1,0 +1,60 @@
+:root {
+    /* Colores principales */
+    --color-primario: #d4a853;
+    --color-primario-hover: #c49a45;
+    --color-oscuro: #1a1a2e;
+    --color-oscuro-footer: #111122;
+    --color-hero-overlay: rgba(0, 0, 0, 0.45);
+
+    /* Colores de texto */
+    --color-texto: #ffffff;
+    --color-texto-secundario: #b0b0b0;
+    --color-texto-oscuro: #2c2c2c;
+    --color-texto-cita: #555555;
+
+    /* Colores de fondo */
+    --color-fondo-claro: #f9f9f9;
+    --color-fondo-card: #ffffff;
+    --color-fondo-hero: #1a1a2e;
+
+    /* Bordes */
+    --color-borde: #e8e8e8;
+    --color-borde-card: #e0e0e0;
+
+    /* Tipografías */
+    --font-titulos: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    --font-body: 'Inter', 'Segoe UI', Tahoma, sans-serif;
+
+    /* Tamaños de fuente */
+    --fs-hero-titulo: 3rem;
+    --fs-hero-subtitulo: 1.05rem;
+    --fs-seccion-titulo: 2rem;
+    --fs-card-titulo: 1.05rem;
+    --fs-card-texto: 0.9rem;
+    --fs-nav: 0.9rem;
+    --fs-footer-titulo: 1rem;
+    --fs-footer-texto: 0.85rem;
+    --fs-copyright: 0.8rem;
+
+    /* Espaciados */
+    --espaciado-seccion: 4rem 0;
+    --espaciado-header: 1rem 3rem;
+    --espaciado-footer: 3rem 2rem 1.5rem;
+
+    /* Sombras */
+    --sombra-card: 0 2px 12px rgba(0, 0, 0, 0.06);
+    --sombra-card-hover: 0 6px 20px rgba(0, 0, 0, 0.1);
+
+    /* Border radius */
+    --radius-boton: 6px;
+    --radius-card: 10px;
+
+    /* Transiciones */
+    --transition: all 0.3s ease;
+
+    /* Breakpoints */
+    --bp-mobile: 480px;
+    --bp-tablet: 768px;
+    --bp-desktop: 1024px;
+    --bp-desktop-lg: 1200px;
+}
