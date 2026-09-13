@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservar Habitación - Hotel Eclipse</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/reservas.css">
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <nav class="nav container">
+            <a href="inicio.html" class="nav__logo">
+                <img src="img/logo.webp" alt="Eclipse Suites Hotel" class="nav__logo-img">
+            </a>
+
+            <ul class="nav__menu">
+                <li class="nav__item">
+                    <a href="inicio.html" class="nav__link">Inicio</a>
+                </li>
+                <li class="nav__item">
+                    <a href="habitaciones.html" class="nav__link">Habitaciones</a>
+                </li>
+                <li class="nav__item">
+                    <a href="reservar.html" class="nav__link nav__link--activo">Reservar</a>
+                </li>
+                <li class="nav__item">
+                    <a href="#contacto" class="nav__link">Contacto</a>
+                </li>
+            </ul>
+
+            <div class="nav__acciones">
+                <a href="registro.html" class="nav__btn-crear">Crear cuenta</a>
+                <a href="iniciar-sesion.html" class="nav__cuenta">
+                    <svg class="nav__cuenta-icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                    <span>Mi Cuenta</span>
+                </a>
+            </div>
+
+            <button class="nav__hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- MAIN -->
+    <main>
+
+        <!-- RESERVAR -->
+        <section class="reservar">
+            <div class="container">
+                <h2 class="seccion__titulo seccion__titulo--izquierda">Reservar Habitación</h2>
+
+                <div class="reservar__layout">
+
+                    <!-- Formulario -->
+                    <form class="reservar__formulario" id="reservaForm" novalidate>
+
+                        <!-- Detalles de la Reserva -->
+                        <div class="reservar__seccion">
+                            <h3 class="reservar__seccion-titulo">1. Detalles de la Reserva</h3>
+
+                            <div class="reservar__fila">
+                                <div class="reservar__campo">
+                                    <label class="reservar__label" for="checkin">Check-in</label>
+                                    <input type="date" id="checkin" name="checkin" class="reservar__input" required>
+                                </div>
+                                <div class="reservar__campo">
+                                    <label class="reservar__label" for="checkout">Check-out</label>
+                                    <input type="date" id="checkout" name="checkout" class="reservar__input" required>
+                                </div>
+                            </div>
+
+                            <div class="reservar__fila reservar__fila--completa">
+                                <div class="reservar__campo">
+                                    <label class="reservar__label" for="huespedes">Número de Huéspedes</label>
+                                    <select id="huespedes" name="huespedes" class="reservar__select" required>
+                                        <option value="">Seleccionar</option>
+                                        <option value="1">1 Adulto</option>
+                                        <option value="2" selected>2 Adultos</option>
+                                        <option value="3">3 Adultos</option>
+                                        <option value="4">4 Adultos</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Información del Huésped -->
+                        <div class="reservar__seccion">
+                            <h3 class="reservar__seccion-titulo">2. Información del Huésped</h3>
+
+                            <div class="reservar__fila reservar__fila--completa">
+                                <div class="reservar__campo">
+                                    <label class="reservar__label" for="nombre">Nombre Completo</label>
+                                    <input type="text" id="nombre" name="nombre" class="reservar__input" placeholder="Tu nombre completo" required>
+                                </div>
+                            </div>
+
+                            <div class="reservar__fila">
+                                <div class="reservar__campo">
+                                    <label class="reservar__label" for="email">Email</label>
+                                    <input type="email" id="email" name="email" class="reservar__input" placeholder="correo@ejemplo.com" required>
+                                </div>
+                                <div class="reservar__campo">
+                                    <label class="reservar__label" for="telefono">Teléfono</label>
+                                    <input type="tel" id="telefono" name="telefono" class="reservar__input" placeholder="+56 9 0000 0000" required>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+
+                    <!-- Resumen de Reserva -->
+                    <aside class="reservar__resumen">
+                        <h3 class="reservar__resumen-titulo">Resumen de Reserva</h3>
+
+                        <div class="reservar__resumen-habitacion">
+                            <img src="img/habitaciones/suite-presidencial.jpg" alt="Habitación seleccionada" class="reservar__resumen-imagen" id="resumenImagen">
+                            <div class="reservar__resumen-hab-info">
+                                <p class="reservar__resumen-hab-nombre" id="resumenNombre">Suite Presidencial</p>
+                                <p class="reservar__resumen-hab-precio" id="resumenPrecioNoche">$400 / noche</p>
+                            </div>
+                        </div>
+
+                        <div class="reservar__resumen-detalles">
+                            <div class="reservar__resumen-fila">
+                                <span>Noches calculadas</span>
+                                <span id="resumenNoches">3 noches</span>
+                            </div>
+                            <div class="reservar__resumen-fila">
+                                <span>Tarifa por noche</span>
+                                <span id="resumenTarifa">$400.00 USD</span>
+                            </div>
+                            <div class="reservar__resumen-fila">
+                                <span>Cargos de servicio</span>
+                                <span>$0.00 USD (Inscrito)</span>
+                            </div>
+                        </div>
+
+                        <div class="reservar__resumen-total">
+                            <span class="reservar__resumen-total-texto">Total Estimado</span>
+                            <span class="reservar__resumen-total-monto" id="resumenTotal">$1,200.00</span>
+                        </div>
+
+                        <button type="submit" form="reservaForm" class="reservar__btn-confirmar">Confirmar Reserva</button>
+                        <p class="reservar__cancelacion">Cancelación gratuita disponible hasta 48 hrs antes del check-in.</p>
+                    </aside>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer__contenido container">
+            <div class="footer__col footer__brand">
+                <a href="inicio.html" class="footer__logo">
+                    <img src="img/logo.webp" alt="Eclipse Suites Hotel" class="footer__logo-img">
+                </a>
+                <p class="footer__descripcion">Un santuario de descanso absoluto, diseñado para quienes valoran la elegancia silenciosa, la privacidad rigurosa y un servicio sin precedentes.</p>
+            </div>
+
+            <div class="footer__col">
+                <h4 class="footer__titulo">Contacto</h4>
+                <ul class="footer__lista">
+                    <li class="footer__item">
+                        <svg class="footer__item-icono" viewBox="0 0 24 24" fill="none" stroke="#d4a853" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        <span>Av. Principal 1234, Ciudad</span>
+                    </li>
+                    <li class="footer__item">
+                        <svg class="footer__item-icono" viewBox="0 0 24 24" fill="none" stroke="#d4a853" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        <span>+52 8 1234 5678</span>
+                    </li>
+                    <li class="footer__item">
+                        <svg class="footer__item-icono" viewBox="0 0 24 24" fill="none" stroke="#d4a853" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        <span>reservas@HotelEclipse.com</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="footer__col">
+                <h4 class="footer__titulo">Políticas</h4>
+                <ul class="footer__lista footer__lista--links">
+                    <li><a href="#" class="footer__link">Política de Privacidad</a></li>
+                    <li><a href="#" class="footer__link">Términos y Condiciones</a></li>
+                    <li><a href="#" class="footer__link">Preguntas Frecuentes</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer__bottom container">
+            <p class="footer__copyright">&copy; 2026 Hotel Eclipse. Todos los derechos reservados.</p>
+            <div class="footer__redes">
+                <a href="#" class="footer__redes-link" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                </a>
+                <a href="#" class="footer__redes-link" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                </a>
+                <a href="#" class="footer__redes-link" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/principal.js"></script>
+    <script src="js/reservas.js"></script>
+</body>
+</html>
