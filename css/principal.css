@@ -44,9 +44,10 @@ body {
     flex-shrink: 0;
 }
 
-.nav__logo-icon {
-    width: 36px;
-    height: 36px;
+.nav__logo-img {
+    height: 45px;
+    width: auto;
+    object-fit: contain;
 }
 
 .nav__logo-texto {
@@ -115,6 +116,28 @@ body {
 .nav__cuenta-icono {
     width: 18px;
     height: 18px;
+}
+
+.nav__acciones {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+}
+
+.nav__btn-crear {
+    padding: 0.5rem 1.2rem;
+    background-color: var(--color-primario);
+    color: var(--color-oscuro);
+    font-size: var(--fs-nav);
+    font-weight: 600;
+    border-radius: var(--radius-boton);
+    transition: var(--transition);
+}
+
+.nav__btn-crear:hover {
+    background-color: var(--color-primario-hover);
+    transform: translateY(-1px);
 }
 
 .nav__hamburger {
@@ -376,9 +399,10 @@ body {
     margin-bottom: 1rem;
 }
 
-.footer__logo-icon {
-    width: 32px;
-    height: 32px;
+.footer__logo-img {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
 }
 
 .footer__logo-texto {
@@ -478,6 +502,62 @@ body {
 }
 
 /* ========================================
+   CTA REGISTRO
+   ======================================== */
+
+.cta-registro {
+    padding: var(--espaciado-seccion);
+    background: linear-gradient(135deg, var(--color-oscuro) 0%, #16213e 100%);
+    text-align: center;
+}
+
+.cta-registro__contenido {
+    max-width: 600px;
+}
+
+.cta-registro__titulo {
+    font-family: var(--font-titulos);
+    font-size: var(--fs-seccion-titulo);
+    font-weight: 500;
+    font-style: italic;
+    color: var(--color-texto);
+    margin-bottom: 1rem;
+}
+
+.cta-registro__texto {
+    font-size: var(--fs-hero-subtitulo);
+    color: var(--color-texto-secundario);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+}
+
+.cta-registro__botones {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.cta-registro__btn-secundario {
+    display: inline-block;
+    padding: 0.85rem 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: var(--color-texto);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    border-radius: var(--radius-boton);
+    transition: var(--transition);
+}
+
+.cta-registro__btn-secundario:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+    border-color: var(--color-primario);
+    color: var(--color-primario);
+}
+
+/* ========================================
    RESPONSIVE
    ======================================== */
 
@@ -528,6 +608,10 @@ body {
     }
 
     .nav__cuenta {
+        display: none;
+    }
+
+    .nav__acciones {
         display: none;
     }
 
@@ -587,7 +671,21 @@ body {
         padding: var(--espaciado-header);
     }
 
+    .nav__logo-img {
+        height: 35px;
+    }
+
     .hero__btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .cta-registro__botones {
+        flex-direction: column;
+    }
+
+    .cta-registro__botones .hero__btn,
+    .cta-registro__btn-secundario {
         width: 100%;
         text-align: center;
     }
