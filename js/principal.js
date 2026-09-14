@@ -4,15 +4,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const navLinks = document.querySelectorAll('.nav__link');
 
     if (hamburger && menu) {
+        let overlay = document.querySelector('.nav__overlay');
+        if (!overlay) {
+            overlay = document.createElement('div');
+            overlay.classList.add('nav__overlay');
+            document.body.appendChild(overlay);
+        }
+
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('nav__hamburger--activo');
             menu.classList.toggle('nav__menu--activo');
+            overlay.classList.toggle('nav__overlay--activo');
+        });
+
+        overlay.addEventListener('click', () => {
+            hamburger.classList.remove('nav__hamburger--activo');
+            menu.classList.remove('nav__menu--activo');
+            overlay.classList.remove('nav__overlay--activo');
         });
 
         navLinks.forEach(link => {
             link.addEventListener('click', () => {
                 hamburger.classList.remove('nav__hamburger--activo');
                 menu.classList.remove('nav__menu--activo');
+                overlay.classList.remove('nav__overlay--activo');
             });
         });
     }
