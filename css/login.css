@@ -1,0 +1,205 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+@keyframes fadeInBg {
+    0% {
+        opacity: 0;
+        transform: scale(1.02);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.main-content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, rgba(10, 15, 30, 0.75), rgba(26, 43, 76, 0.65)), 
+                url('../img/fondo-login.jpg') no-repeat center center/cover;
+    padding: 0 8%;
+    box-sizing: border-box;
+    animation: fadeInBg 1.2s ease-in-out forwards;
+}
+
+@keyframes glowAnimation {
+    0% {
+        filter: drop-shadow(0 0 10px rgba(125, 211, 252, 0.4));
+    }
+    50% {
+        filter: drop-shadow(0 0 25px rgba(125, 211, 252, 0.9));
+    }
+    100% {
+        filter: drop-shadow(0 0 10px rgba(125, 211, 252, 0.4));
+    }
+}
+
+@keyframes textGlow {
+    0%, 100% {
+        text-shadow: 0 0 12px rgba(186, 230, 253, 0.5);
+    }
+    50% {
+        text-shadow: 0 0 25px rgba(186, 230, 253, 0.9), 0 0 35px rgba(56, 189, 248, 0.6);
+    }
+}
+
+.brand-section {
+    color: #ffffff;
+    max-width: 450px;
+    text-align: center;
+}
+
+.logo-wrapper {
+    margin-bottom: 15px;
+}
+
+.brand-logo {
+    max-width: 260px;
+    height: auto;
+    animation: glowAnimation 4s infinite ease-in-out;
+}
+
+.brand-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    margin: 10px 0 5px 0;
+    color: #e0f2fe;
+    animation: textGlow 3s infinite ease-in-out;
+}
+
+.brand-subtitle {
+    font-size: 1.1rem;
+    letter-spacing: 6px;
+    color: #93c5fd;
+    margin-bottom: 20px;
+    font-weight: 300;
+}
+
+.brand-description {
+    font-size: 0.95rem;
+    color: #cbd5e1;
+    line-height: 1.6;
+    font-style: italic;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.login-container {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(14px);
+    padding: 45px 40px;
+    border-radius: 18px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+    width: 100%;
+    max-width: 420px;
+    animation: fadeInUp 1s ease-out forwards;
+}
+
+.login-header h2 {
+    color: #0f172a;
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.login-header p {
+    color: #64748b;
+    font-size: 0.9rem;
+    margin-bottom: 28px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: 600;
+    font-size: 0.88rem;
+    margin-bottom: 6px;
+    color: #334155;
+}
+
+.form-group input {
+    padding: 13px 15px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: #0284c7;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.18);
+}
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    font-size: 0.85rem;
+    color: #475569;
+}
+
+.form-options a {
+    color: #0284c7;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.form-options a:hover {
+    text-decoration: underline;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 14px;
+    background-color: #0f172a;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0284c7;
+    transform: translateY(-1px);
+}
+
+.btn-primary:active {
+    transform: scale(0.98);
+}
+
+.error-message {
+    color: #dc2626;
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-size: 0.85rem;
+    text-align: center;
+}
