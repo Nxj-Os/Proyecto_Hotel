@@ -3,6 +3,7 @@ package com.hotel.demo.controller;
 import com.hotel.demo.model.Usuario;
 import com.hotel.demo.repository.UsuarioRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
