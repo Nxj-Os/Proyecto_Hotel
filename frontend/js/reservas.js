@@ -1,30 +1,20 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const habitaciones = {
-        'suite-presidencial': {
-            nombre: 'Suite Presidencial',
-            precio: 400,
-            imagen: 'img/habitaciones/suite-presidencial.jpg'
-        },
-        'habitacion-deluxe': {
-            nombre: 'Habitación Deluxe',
-            precio: 250,
-            imagen: 'img/habitaciones/habitacion-deluxe.jpg'
-        },
-        'suite-junior': {
-            nombre: 'Suite Junior',
-            precio: 180,
-            imagen: 'img/habitaciones/suite-junior.jpg'
-        },
-        'habitacion-estandar': {
-            nombre: 'Habitación Estándar',
-            precio: 120,
-            imagen: 'img/habitaciones/habitacion-estandar.jpg'
-        }
+    const API_BASE = location.port === '8080' ? '' : 'http://localhost:8080';
+
+    const nombres = {
+        'suite-presidencial': 'Suite Presidencial',
+        'habitacion-deluxe': 'Habitación Deluxe',
+        'suite-junior': 'Suite Junior',
+        'habitacion-estandar': 'Habitación Estándar'
     };
 
-    const params = new URLSearchParams(window.location.search);
-    const habitacionKey = params.get('habitacion') || 'suite-presidencial';
-    const habitacion = habitaciones[habitacionKey] || habitaciones['suite-presidencial'];
+    function nombreDesdeTipo(tipo) {
+        if (nombres[tipo]) return nombres[tipo];
+        return tipo
+            .split('-')
+            .map(p => p.charAt(0).toUpperCase() + p.slice(1))
+            .join(' ');
+    }
 
     const resumenImagen = document.getElementById('resumenImagen');
     const resumenNombre = document.getElementById('resumenNombre');
@@ -36,7 +26,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const checkoutInput = document.getElementById('checkout');
     const form = document.getElementById('reservaForm');
 
+    let catalogo = {};
+    let habitacion = null;
+
     function actualizarResumen() {
+        if (!habitacion) return;
         if (resumenImagen) resumenImagen.src = habitacion.imagen;
         if (resumenNombre) resumenNombre.textContent = habitacion.nombre;
         if (resumenPrecioNoche) resumenPrecioNoche.textContent = `$${habitacion.precio} / noche`;
@@ -52,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function actualizarTotal() {
+        if (!habitacion) return;
         const noches = calcularNoches();
         const total = noches * habitacion.precio;
         if (resumenNoches) resumenNoches.textContent = `${noches} noche${noches !== 1 ? 's' : ''}`;
@@ -62,6 +57,61 @@ document.addEventListener('DOMContentLoaded', () => {
         const hoy = new Date().toISOString().split('T')[0];
         if (checkinInput) checkinInput.min = hoy;
         if (checkoutInput) checkoutInput.min = hoy;
+    }
+
+    async function cargarHabitaciones() {
+        const respuesta = await fetch(`${API_BASE}/api/habitaciones`);
+        if (!respuesta.ok) throw new Error('No se pudieron cargar las habitaciones');
+        const habitaciones = await respuesta.json();
+
+        catalogo = {};
+        habitaciones.forEach(h => {
+            catalogo[h.tipo] = {
+                id: h.id,
+                nombre: nombreDesdeTipo(h.tipo),
+                precio: h.precio,
+                imagen: `img/habitaciones/${h.tipo}.jpg`
+            };
+        });
+
+        const params = new URLSearchParams(window.location.search);
+        const habitacionKey = params.get('habitacion');
+        habitacion = catalogo[habitacionKey]
+            || catalogo[Object.keys(catalogo)[0]]
+            || null;
+
+        actualizarResumen();
+        actualizarTotal();
+    }
+
+    async function obtenerOCrearUsuario(nombre, email, telefono) {
+        const userId = localStorage.getItem('userId');
+        if (userId) return Number(userId);
+
+        const busqueda = await fetch(`${API_BASE}/api/usuarios/email/${encodeURIComponent(email)}`);
+        if (busqueda.ok) {
+            const usuario = await busqueda.json();
+            return usuario.id;
+        }
+
+        const creacion = await fetch(`${API_BASE}/api/usuarios`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                nombre: nombre,
+                email: email,
+                password: telefono || 'invitado',
+                rol: 'CLIENTE'
+            })
+        });
+
+        if (creacion.status === 409) {
+            const reintento = await fetch(`${API_BASE}/api/usuarios/email/${encodeURIComponent(email)}`);
+            if (reintento.ok) return (await reintento.json()).id;
+        }
+
+        if (!creacion.ok) throw new Error('No se pudo registrar al huésped');
+        return (await creacion.json()).id;
     }
 
     if (checkinInput) {
@@ -83,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (form) {
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
             const nombre = document.getElementById('nombre');
@@ -125,45 +175,56 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (checkout) checkout.style.borderColor = '#e74c3c';
             }
 
-            if (valido) {
-                alert(`Reserva confirmada para ${habitacion.nombre}\n\nCheck-in: ${checkin.value}\nCheck-out: ${checkout.value}\nTotal: ${resumenTotal.textContent}`);
+            if (!valido) return;
+
+            if (!habitacion) {
+                alert('No hay habitaciones disponibles en este momento.');
+                return;
             }
-        });
-    }
 
-    if (!window.__navInit) {
-        window.__navInit = true;
-        const hamburger = document.querySelector('.nav__hamburger');
-        const menu = document.querySelector('.nav__menu');
-        const navLinks = document.querySelectorAll('.nav__link');
+            const boton = document.querySelector('.reservar__btn-confirmar');
+            if (boton) {
+                boton.disabled = true;
+                boton.textContent = 'Confirmando...';
+            }
 
-        if (hamburger && menu) {
-            hamburger.addEventListener('click', () => {
-                hamburger.classList.toggle('nav__hamburger--activo');
-                menu.classList.toggle('nav__menu--activo');
-            });
+            try {
+                const usuarioId = await obtenerOCrearUsuario(
+                    nombre.value.trim(),
+                    email.value.trim(),
+                    telefono.value.trim()
+                );
 
-            navLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    hamburger.classList.remove('nav__hamburger--activo');
-                    menu.classList.remove('nav__menu--activo');
+                const respuesta = await fetch(`${API_BASE}/api/reservas`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        usuario: { id: usuarioId },
+                        habitacion: { id: habitacion.id },
+                        fechaInicio: checkin.value,
+                        fechaFin: checkout.value,
+                        estado: 'CONFIRMADA'
+                    })
                 });
-            });
-        }
 
-        const header = document.querySelector('.header');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.style.backgroundColor = 'rgba(26, 26, 46, 0.97)';
-                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.3)';
-            } else {
-                header.style.backgroundColor = 'var(--color-oscuro)';
-                header.style.boxShadow = 'none';
+                if (!respuesta.ok) throw new Error('No se pudo crear la reserva');
+
+                alert(`Reserva confirmada para ${habitacion.nombre}\n\nCheck-in: ${checkin.value}\nCheck-out: ${checkout.value}\nTotal: ${resumenTotal.textContent}`);
+                form.reset();
+                actualizarTotal();
+            } catch (error) {
+                alert('Ocurrió un error al procesar tu reserva. Intenta nuevamente.');
+            } finally {
+                if (boton) {
+                    boton.disabled = false;
+                    boton.textContent = 'Confirmar Reserva';
+                }
             }
         });
     }
 
     establecerFechasMinimas();
-    actualizarResumen();
-    actualizarTotal();
+    cargarHabitaciones().catch(() => {
+        alert('No se pudieron cargar las habitaciones. Verifica que el servidor esté en ejecución.');
+    });
 });
