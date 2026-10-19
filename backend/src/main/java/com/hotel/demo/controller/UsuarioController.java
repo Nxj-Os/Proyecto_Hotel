@@ -40,9 +40,29 @@ public class UsuarioController {
                         "Usuario no encontrado con id " + id));
     }
 
+    @GetMapping("/email/{email}")
+    public Usuario buscarPorEmail(@PathVariable String email) {
+        return usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Usuario no encontrado con email " + email));
+    }
+
+    @PostMapping("/login")
+    public Usuario login(@RequestBody Usuario credenciales) {
+        return usuarioRepository.findByEmail(credenciales.getEmail())
+                .filter(u -> u.getPassword() != null
+                        && u.getPassword().equals(credenciales.getPassword()))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED,
+                        "Credenciales inválidas"));
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Usuario crear(@RequestBody Usuario usuario) {
+        usuarioRepository.findByEmail(usuario.getEmail()).ifPresent(u -> {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "El email ya está registrado");
+        });
         return usuarioRepository.save(usuario);
     }
 
