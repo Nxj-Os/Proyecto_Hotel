@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     const registerForm = document.getElementById('registerForm');
     const errorMessage = document.getElementById('errorMessage');
-
-    const API_BASE = location.port === '8080' ? '' : 'http://localhost:8080';
+    const Session = window.HotelSession;
+    const API_BASE = Session ? Session.apiBase : 'http://localhost:8080';
 
     registerForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -17,7 +17,19 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        if (password.length < 6) {
+            errorMessage.textContent = 'La contraseña debe tener al menos 6 caracteres.';
+            errorMessage.style.display = 'block';
+            return;
+        }
+
         errorMessage.style.display = 'none';
+
+        const boton = registerForm.querySelector('button[type="submit"]');
+        if (boton) {
+            boton.disabled = true;
+            boton.textContent = 'Creando cuenta...';
+        }
 
         try {
             const respuesta = await fetch(`${API_BASE}/api/usuarios`, {
@@ -43,10 +55,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            window.location.href = 'iniciar-sesion.html';
+            const usuario = await respuesta.json();
+
+            if (Session && Session.saveUser) {
+                Session.saveUser(usuario, true);
+            } else {
+                localStorage.setItem('hotelUser', JSON.stringify(usuario));
+            }
+
+            window.location.href = 'perfil.html';
         } catch (error) {
             errorMessage.textContent = 'No se pudo conectar con el servidor. Intenta nuevamente.';
             errorMessage.style.display = 'block';
+        } finally {
+            if (boton) {
+                boton.disabled = false;
+                boton.textContent = 'Registrarse';
+            }
         }
     });
 });

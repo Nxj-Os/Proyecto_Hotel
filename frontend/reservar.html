@@ -7,9 +7,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/variables.css">
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/reservas.css">
+    <link rel="stylesheet" href="css/variables.css?v=6">
+    <link rel="stylesheet" href="css/reset.css?v=6">
+    <link rel="stylesheet" href="css/reservas.css?v=6">
 </head>
 <body>
 
@@ -31,13 +31,16 @@
                     <a href="reservar.html" class="nav__link nav__link--activo">Reservar</a>
                 </li>
                 <li class="nav__item">
+                    <a href="perfil.html" class="nav__link">Mi Perfil</a>
+                </li>
+                <li class="nav__item">
                     <a href="#contacto" class="nav__link">Contacto</a>
                 </li>
             </ul>
 
             <div class="nav__acciones">
                 <a href="registro.html" class="nav__btn-crear">Crear cuenta</a>
-                <a href="iniciar-sesion.html" class="nav__cuenta">
+                <a href="perfil.html" class="nav__cuenta">
                     <svg class="nav__cuenta-icono" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                         <circle cx="12" cy="7" r="4"/>
@@ -129,7 +132,7 @@
                             <img src="img/habitaciones/suite-presidencial.jpg" alt="Habitación seleccionada" class="reservar__resumen-imagen" id="resumenImagen">
                             <div class="reservar__resumen-hab-info">
                                 <p class="reservar__resumen-hab-nombre" id="resumenNombre">Suite Presidencial</p>
-                                <p class="reservar__resumen-hab-precio" id="resumenPrecioNoche">$400 / noche</p>
+                                <p class="reservar__resumen-hab-precio" id="resumenPrecioNoche">S/ 400 / noche</p>
                             </div>
                         </div>
 
@@ -140,17 +143,17 @@
                             </div>
                             <div class="reservar__resumen-fila">
                                 <span>Tarifa por noche</span>
-                                <span id="resumenTarifa">$400.00 USD</span>
+                                <span id="resumenTarifa">S/ 400.00</span>
                             </div>
                             <div class="reservar__resumen-fila">
                                 <span>Cargos de servicio</span>
-                                <span>$0.00 USD (Inscrito)</span>
+                                <span>S/ 0.00 (Inscrito)</span>
                             </div>
                         </div>
 
                         <div class="reservar__resumen-total">
                             <span class="reservar__resumen-total-texto">Total Estimado</span>
-                            <span class="reservar__resumen-total-monto" id="resumenTotal">$1,200.00</span>
+                            <span class="reservar__resumen-total-monto" id="resumenTotal">S/ 1,200.00</span>
                         </div>
 
                         <button type="submit" form="reservaForm" class="reservar__btn-confirmar">Confirmar Reserva</button>
@@ -164,7 +167,7 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="footer">
+    <footer class="footer" id="contacto">
         <div class="footer__contenido container">
             <div class="footer__col footer__brand">
                 <a href="index.html" class="footer__logo">
@@ -217,7 +220,8 @@
         </div>
     </footer>
 
-    <script src="js/principal.js"></script>
-    <script src="js/reservas.js"></script>
+    <script src="js/session.js?v=6"></script>
+    <script src="js/principal.js?v=6"></script>
+    <script src="js/reservas.js?v=6"></script>
 </body>
 </html>
