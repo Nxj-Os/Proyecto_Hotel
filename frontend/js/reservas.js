@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const API_BASE = location.port === '8080' ? '' : 'http://localhost:8080';
+    const Session = window.HotelSession;
+    const API_BASE = Session ? Session.apiBase : 'http://localhost:8080';
+    const usuarioSesion = Session ? Session.getUser() : null;
 
     const nombres = {
         'suite-presidencial': 'Suite Presidencial',
@@ -29,12 +31,37 @@ document.addEventListener('DOMContentLoaded', () => {
     let catalogo = {};
     let habitacion = null;
 
+    function prellenarHuesped() {
+        if (!usuarioSesion) return;
+
+        const nombre = document.getElementById('nombre');
+        const email = document.getElementById('email');
+        const telefono = document.getElementById('telefono');
+
+        if (nombre) {
+            nombre.value = usuarioSesion.nombre || '';
+            nombre.readOnly = true;
+        }
+        if (email) {
+            email.value = usuarioSesion.email || '';
+            email.readOnly = true;
+        }
+        if (telefono) {
+            telefono.required = false;
+            telefono.placeholder = 'Opcional';
+        }
+    }
+
+    function habitacionesDisponibles(lista) {
+        return lista.filter(h => h.disponible !== false);
+    }
+
     function actualizarResumen() {
         if (!habitacion) return;
         if (resumenImagen) resumenImagen.src = habitacion.imagen;
         if (resumenNombre) resumenNombre.textContent = habitacion.nombre;
-        if (resumenPrecioNoche) resumenPrecioNoche.textContent = `$${habitacion.precio} / noche`;
-        if (resumenTarifa) resumenTarifa.textContent = `$${habitacion.precio.toFixed(2)} USD`;
+        if (resumenPrecioNoche) resumenPrecioNoche.textContent = `S/ ${habitacion.precio} / noche`;
+        if (resumenTarifa) resumenTarifa.textContent = `S/ ${habitacion.precio.toFixed(2)}`;
     }
 
     function calcularNoches() {
@@ -50,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const noches = calcularNoches();
         const total = noches * habitacion.precio;
         if (resumenNoches) resumenNoches.textContent = `${noches} noche${noches !== 1 ? 's' : ''}`;
-        if (resumenTotal) resumenTotal.textContent = `$${total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        if (resumenTotal) resumenTotal.textContent = `S/ ${total.toLocaleString('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     }
 
     function establecerFechasMinimas() {
@@ -62,14 +89,14 @@ document.addEventListener('DOMContentLoaded', () => {
     async function cargarHabitaciones() {
         const respuesta = await fetch(`${API_BASE}/api/habitaciones`);
         if (!respuesta.ok) throw new Error('No se pudieron cargar las habitaciones');
-        const habitaciones = await respuesta.json();
+        const habitaciones = habitacionesDisponibles(await respuesta.json());
 
         catalogo = {};
         habitaciones.forEach(h => {
             catalogo[h.tipo] = {
                 id: h.id,
                 nombre: nombreDesdeTipo(h.tipo),
-                precio: h.precio,
+                precio: Number(h.precio),
                 imagen: `img/habitaciones/${h.tipo}.jpg`
             };
         });
@@ -80,13 +107,18 @@ document.addEventListener('DOMContentLoaded', () => {
             || catalogo[Object.keys(catalogo)[0]]
             || null;
 
+        const boton = document.querySelector('.reservar__btn-confirmar');
+        if (!habitacion && boton) {
+            boton.disabled = true;
+            boton.textContent = 'Sin disponibilidad';
+        }
+
         actualizarResumen();
         actualizarTotal();
     }
 
     async function obtenerOCrearUsuario(nombre, email, telefono) {
-        const userId = localStorage.getItem('userId');
-        if (userId) return Number(userId);
+        if (usuarioSesion && usuarioSesion.id) return usuarioSesion.id;
 
         const busqueda = await fetch(`${API_BASE}/api/usuarios/email/${encodeURIComponent(email)}`);
         if (busqueda.ok) {
@@ -148,7 +180,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (campo) campo.style.borderColor = '';
             });
 
-            if (!checkin.value || !checkout.value) {
+            const hoy = new Date();
+            hoy.setHours(0, 0, 0, 0);
+
+            if (!checkin.value || !checkout.value || new Date(checkin.value) < hoy) {
                 valido = false;
                 if (checkin) checkin.style.borderColor = '#e74c3c';
                 if (checkout) checkout.style.borderColor = '#e74c3c';
@@ -164,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 email.style.borderColor = '#e74c3c';
             }
 
-            if (!telefono.value.trim()) {
+            if (!usuarioSesion && !telefono.value.trim()) {
                 valido = false;
                 telefono.style.borderColor = '#e74c3c';
             }
@@ -175,7 +210,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (checkout) checkout.style.borderColor = '#e74c3c';
             }
 
-            if (!valido) return;
+            if (!valido) {
+                alert('Revisa los campos marcados en rojo. La fecha de check-in no puede ser anterior a hoy.');
+                return;
+            }
 
             if (!habitacion) {
                 alert('No hay habitaciones disponibles en este momento.');
@@ -210,7 +248,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!respuesta.ok) throw new Error('No se pudo crear la reserva');
 
                 alert(`Reserva confirmada para ${habitacion.nombre}\n\nCheck-in: ${checkin.value}\nCheck-out: ${checkout.value}\nTotal: ${resumenTotal.textContent}`);
+
+                if (usuarioSesion) {
+                    window.location.href = 'perfil.html';
+                    return;
+                }
+
                 form.reset();
+                prellenarHuesped();
                 actualizarTotal();
             } catch (error) {
                 alert('Ocurrió un error al procesar tu reserva. Intenta nuevamente.');
@@ -224,6 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     establecerFechasMinimas();
+    prellenarHuesped();
     cargarHabitaciones().catch(() => {
         alert('No se pudieron cargar las habitaciones. Verifica que el servidor esté en ejecución.');
     });

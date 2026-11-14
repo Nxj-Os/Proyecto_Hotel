@@ -1,0 +1,420 @@
+/* ========================================
+   PERFIL
+   ======================================== */
+
+.perfil {
+    padding-top: 80px;
+    background-color: var(--color-fondo-claro);
+    min-height: 100vh;
+}
+
+.perfil__hero {
+    background: linear-gradient(135deg, rgba(26, 26, 46, 0.95) 0%, rgba(22, 33, 62, 0.92) 100%),
+                url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1600&q=80') center/cover no-repeat;
+    color: var(--color-texto);
+    padding: 4.5rem 0 3.5rem;
+}
+
+.perfil__hero-etiqueta {
+    display: inline-block;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--color-primario);
+    margin-bottom: 0.75rem;
+}
+
+.perfil__hero-titulo {
+    font-family: var(--font-titulos);
+    font-size: 2.6rem;
+    font-weight: 500;
+    font-style: italic;
+    margin-bottom: 0.75rem;
+}
+
+.perfil__hero-texto {
+    color: var(--color-texto-secundario);
+    font-size: 1rem;
+}
+
+.perfil__contenido {
+    padding-top: 3rem;
+    padding-bottom: 4rem;
+}
+
+.perfil__grid {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+/* Tarjeta del usuario */
+.perfil__card {
+    background-color: #ffffff;
+    border: 1px solid var(--color-borde-card);
+    border-radius: var(--radius-card);
+    padding: 2rem;
+    box-shadow: var(--sombra-card);
+    text-align: center;
+    position: sticky;
+    top: 100px;
+}
+
+.perfil__avatar {
+    width: 88px;
+    height: 88px;
+    margin: 0 auto 1.25rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-primario) 0%, var(--color-primario-hover) 100%);
+    color: var(--color-oscuro);
+    font-family: var(--font-titulos);
+    font-size: 1.8rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 1px;
+}
+
+.perfil__nombre {
+    font-family: var(--font-titulos);
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--color-texto-oscuro);
+    margin-bottom: 0.5rem;
+    word-break: break-word;
+}
+
+.perfil__rol {
+    display: inline-block;
+    padding: 0.25rem 0.9rem;
+    border-radius: 999px;
+    background-color: rgba(212, 168, 83, 0.15);
+    color: #9a7420;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    margin-bottom: 1.75rem;
+}
+
+.perfil__datos {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: left;
+    margin-bottom: 1.75rem;
+}
+
+.perfil__dato {
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid var(--color-borde);
+}
+
+.perfil__dato:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.perfil__dato-label {
+    display: block;
+    font-size: 0.72rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #8a8a8a;
+    margin-bottom: 0.25rem;
+}
+
+.perfil__dato-valor {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-texto-oscuro);
+    word-break: break-word;
+}
+
+.perfil__btn {
+    display: block;
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border-radius: var(--radius-boton);
+    background-color: var(--color-primario);
+    color: var(--color-oscuro);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    transition: var(--transition);
+    margin-top: 0.75rem;
+}
+
+.perfil__btn:hover {
+    background-color: var(--color-primario-hover);
+    transform: translateY(-1px);
+}
+
+.perfil__btn--outline {
+    background-color: transparent;
+    border: 1px solid var(--color-borde-card);
+    color: var(--color-texto-cita);
+}
+
+.perfil__btn--outline:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+    border-color: var(--color-primario);
+    color: var(--color-texto-oscuro);
+    transform: none;
+}
+
+/* Reservas */
+.perfil__reservas-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.perfil__reservas-header h2 {
+    font-family: var(--font-titulos);
+    font-size: 1.6rem;
+    font-weight: 500;
+    font-style: italic;
+    color: var(--color-texto-oscuro);
+}
+
+.perfil__link {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #9a7420;
+    transition: var(--transition);
+}
+
+.perfil__link:hover {
+    color: var(--color-primario-hover);
+    text-decoration: underline;
+}
+
+.perfil__lista {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.reserva-card {
+    display: grid;
+    grid-template-columns: 130px 1fr auto;
+    gap: 1.25rem;
+    align-items: center;
+    background-color: #ffffff;
+    border: 1px solid var(--color-borde-card);
+    border-radius: var(--radius-card);
+    padding: 1rem;
+    box-shadow: var(--sombra-card);
+    transition: var(--transition);
+}
+
+.reserva-card:hover {
+    box-shadow: var(--sombra-card-hover);
+    transform: translateY(-2px);
+}
+
+.reserva-card__imagen {
+    width: 130px;
+    height: 96px;
+    border-radius: 8px;
+    background-color: var(--color-fondo-claro);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.reserva-card__cabecera {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.35rem;
+}
+
+.reserva-card__titulo {
+    font-family: var(--font-titulos);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-texto-oscuro);
+}
+
+.reserva-card__hab {
+    font-size: 0.85rem;
+    color: #7a7a7a;
+    margin-bottom: 0.85rem;
+}
+
+.reserva-card__fechas {
+    display: flex;
+    gap: 1.75rem;
+    flex-wrap: wrap;
+}
+
+.reserva-card__fechas span {
+    display: block;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #9a9a9a;
+    margin-bottom: 0.15rem;
+}
+
+.reserva-card__fechas strong {
+    font-size: 0.88rem;
+    color: var(--color-texto-oscuro);
+}
+
+.reserva-card__estado {
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.reserva-card__estado--confirmada {
+    background-color: #e6f6ec;
+    color: #1e7e44;
+}
+
+.reserva-card__estado--pendiente {
+    background-color: #fdf4e3;
+    color: #a4730f;
+}
+
+.reserva-card__estado--cancelada {
+    background-color: #fdeaea;
+    color: #b43030;
+}
+
+.reserva-card__estado--otra {
+    background-color: #eef1f6;
+    color: #4a5a6e;
+}
+
+.reserva-card__total {
+    text-align: right;
+    padding-left: 1rem;
+    border-left: 1px solid var(--color-borde);
+    min-width: 110px;
+}
+
+.reserva-card__total span {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #9a9a9a;
+    margin-bottom: 0.25rem;
+}
+
+.reserva-card__total strong {
+    font-family: var(--font-titulos);
+    font-size: 1.25rem;
+    color: var(--color-texto-oscuro);
+}
+
+.perfil__vacio {
+    background-color: #ffffff;
+    border: 1px dashed var(--color-borde-card);
+    border-radius: var(--radius-card);
+    padding: 3rem 2rem;
+    text-align: center;
+}
+
+.perfil__vacio h3 {
+    font-family: var(--font-titulos);
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--color-texto-oscuro);
+    margin-bottom: 0.5rem;
+}
+
+.perfil__vacio p {
+    font-size: 0.9rem;
+    color: var(--color-texto-cita);
+    margin-bottom: 1.5rem;
+}
+
+.perfil__vacio .perfil__btn {
+    width: auto;
+    display: inline-block;
+    margin-top: 0;
+    padding: 0.8rem 2rem;
+}
+
+.perfil__mensaje {
+    padding: 0.85rem 1rem;
+    border-radius: var(--radius-boton);
+    font-size: 0.85rem;
+    margin-bottom: 1.25rem;
+}
+
+.perfil__mensaje--aviso {
+    background-color: #fdf4e3;
+    color: #8a6414;
+    border: 1px solid #f0ddb5;
+}
+
+.perfil__mensaje--error {
+    background-color: #fdeaea;
+    color: #a83232;
+    border: 1px solid #f2c4c4;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .perfil__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .perfil__card {
+        position: static;
+    }
+}
+
+@media (max-width: 640px) {
+    .perfil {
+        padding-top: 68px;
+    }
+
+    .perfil__hero {
+        padding: 3rem 0 2.5rem;
+    }
+
+    .perfil__hero-titulo {
+        font-size: 2rem;
+    }
+
+    .reserva-card {
+        grid-template-columns: 90px 1fr;
+        gap: 1rem;
+    }
+
+    .reserva-card__imagen {
+        width: 90px;
+        height: 80px;
+        grid-row: span 2;
+    }
+
+    .reserva-card__total {
+        grid-column: 2;
+        text-align: left;
+        border-left: none;
+        border-top: 1px solid var(--color-borde);
+        padding-left: 0;
+        padding-top: 0.6rem;
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+    }
+}

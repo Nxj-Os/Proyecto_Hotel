@@ -143,6 +143,39 @@ body {
     transform: translateY(-1px);
 }
 
+.nav__cuenta--usuario {
+    max-width: 190px;
+}
+
+.nav__cuenta--usuario span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.nav__btn-salir {
+    padding: 0.5rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: var(--radius-boton);
+    background: transparent;
+    color: var(--color-texto-secundario);
+    font-size: var(--fs-nav);
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.nav__btn-salir:hover {
+    border-color: var(--color-primario);
+    color: var(--color-primario);
+}
+
+.nav__item--cuenta {
+    display: none;
+    width: 100%;
+    text-align: center;
+}
+
 .nav__hamburger {
     display: none;
     flex-direction: column;
@@ -621,6 +654,12 @@ body {
     .nav__hamburger {
         display: flex;
         z-index: 1002;
+    }
+
+    .nav__item--cuenta {
+        display: block;
+        width: auto;
+        text-align: center;
     }
 
     .nav__overlay {
