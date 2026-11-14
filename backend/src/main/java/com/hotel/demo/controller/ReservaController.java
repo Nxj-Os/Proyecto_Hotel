@@ -48,6 +48,7 @@ public class ReservaController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Reserva crear(@RequestBody Reserva reserva) {
+        validarFechas(reserva);
         return reservaRepository.save(reserva);
     }
 
@@ -56,6 +57,7 @@ public class ReservaController {
         reservaRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Reserva no encontrada con id " + id));
+        validarFechas(reserva);
         reserva.setId(id);
         return reservaRepository.save(reserva);
     }
@@ -67,5 +69,15 @@ public class ReservaController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Reserva no encontrada con id " + id));
         reservaRepository.delete(reserva);
+    }
+
+    private void validarFechas(Reserva reserva) {
+        if (reserva.getFechaInicio() == null || reserva.getFechaFin() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Las fechas de inicio y fin son obligatorias.");
+        }
+        if (!reserva.getFechaInicio().isBefore(reserva.getFechaFin())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "La fecha de inicio (check-in) debe ser anterior a la fecha de fin (check-out).");
+        }
     }
 }
