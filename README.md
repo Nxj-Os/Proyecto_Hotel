@@ -27,16 +27,24 @@ El **backend** (Spring Boot + PostgreSQL) sirve la API REST y, además, los arch
 3. Las tablas (`usuarios`, `habitaciones`, `reservas`) las crea Hibernate automáticamente
    (`ddl-auto=update`) la primera vez que arranca la aplicación.
 
-Configuración de conexión usada en `backend/src/main/resources/application.properties`:
+Configuración de conexión usada en `backend/src/main/resources/application.properties`
+(los valores por defecto, que se usan en local):
 
-| Parámetro | Valor |
-|---|---|
-| URL | `jdbc:postgresql://localhost:5432/hotel_db` |
-| Usuario | `postgres` |
-| Contraseña | `postgres` |
+| Parámetro | Variable de entorno | Valor por defecto |
+|---|---|---|
+| URL | `DB_HOST`, `DB_PORT`, `DB_NAME` | `jdbc:postgresql://localhost:5432/hotel_db` |
+| Usuario | `DB_USER` | `postgres` |
+| Contraseña | `DB_PASSWORD` | `123456` |
 
-> Si tus credenciales son distintas, edita ese archivo o define la variable de entorno
-> `SPRING_DATASOURCE_PASSWORD`.
+> Si tus credenciales son distintas, define las variables de entorno `DB_HOST`, `DB_PORT`,
+> `DB_NAME`, `DB_USER` y `DB_PASSWORD` antes de arrancar (sin tocar el archivo), por ejemplo:
+>
+> ```powershell
+> $env:DB_PASSWORD = "tu_contraseña"
+> .\mvnw.cmd spring-boot:run
+> ```
+>
+> En Render estas variables las rellena automáticamente el Blueprint (`render.yaml`).
 
 ---
 
