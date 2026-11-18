@@ -1,0 +1,47 @@
+# Blueprint de Render: crea la base de datos y el servicio con un solo clic
+# desde el dashboard (New > Blueprint > seleccionar este repositorio).
+# Cada push a "main" despliega automáticamente (autoDeploy: true).
+
+services:
+  - type: web
+    name: proyecto-hotel
+    runtime: docker
+    plan: free
+    region: virginia
+    repo: https://github.com/Nxj-Os/Proyecto_Hotel
+    branch: main
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /
+    autoDeploy: true
+    envVars:
+      # Conexión a la base de datos: Render rellena estos valores solo,
+      # sin copiar credenciales a mano.
+      - key: DB_HOST
+        fromDatabase:
+          name: hotel-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: hotel-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: hotel-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: hotel-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: hotel-db
+          property: password
+      # TLS obligatorio para la conexión interna (recomendación de Render)
+      - key: DB_SSL_PARAMS
+        value: "?sslmode=require"
+
+databases:
+  - name: hotel-db
+    plan: free
+    region: virginia
+    databaseName: hotel_db

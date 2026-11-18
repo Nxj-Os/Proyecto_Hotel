@@ -1,0 +1,20 @@
+# Control de lo que entra en el contexto de build de Docker
+.git
+.github
+.gitignore
+
+# Artefactos de build locales (se compilan dentro de la imagen)
+backend/target/
+backend/mvnw
+backend/mvnw.cmd
+
+# Archivos sensibles: Render los copia al contexto; fuera del imagen
+.env
+.env.*
+
+# Documentación y utilidades que la imagen no necesita
+README.md
+*.md
+.opencode/
+.vscode/
+.idea/
