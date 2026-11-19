@@ -147,6 +147,29 @@ También puedes crear tu propia cuenta desde **Crear cuenta** (se guarda en la b
 
 ---
 
+## Despliegue en Render
+
+La aplicación está desplegada en **Render** (plan gratuito, todo en uno: Docker + PostgreSQL):
+
+| Recurso | URL |
+|---|---|
+| Aplicación web + API | https://proyecto-hotel-9adh.onrender.com |
+| API REST | https://proyecto-hotel-9adh.onrender.com/api |
+
+- El despliegue se configura con el Blueprint **`render.yaml`** (servicio Docker + base de datos
+  PostgreSQL gestionados por Render). Los datos de conexión (`DB_HOST`, `DB_PASSWORD`, etc.) los
+  rellena el Blueprint automáticamente; el servicio usa el puerto `PORT` que asigna Render.
+- Cada *push* a `main` con CI en verde vuelve a desplegar la app automáticamente (`autoDeploy`).
+- **Límites del plan gratuito** que conviene conocer:
+  - La **base de datos caduca a los 30 días** (más 14 días de gracia): al expirar se crean una
+    nueva y vacía. El proyecto la rellena solo al arrancar (`DataInitializer`): las 4 habitaciones
+    y el usuario `demo@hotel.com` / `demo123`; **las reservas creadas se pierden**.
+  - El servicio **se apaga tras 15 minutos sin tráfico** y tarda aproximadamente **1 minuto** en
+    despertar en la siguiente visita.
+  - **750 horas al mes** de uso (suficiente para un proyecto de curso).
+
+---
+
 ## Estructura del proyecto
 
 ```
