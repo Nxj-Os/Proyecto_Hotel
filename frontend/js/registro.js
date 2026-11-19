@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const registerForm = document.getElementById('registerForm');
     const errorMessage = document.getElementById('errorMessage');
     const Session = window.HotelSession;
-    const API_BASE = Session ? Session.apiBase : 'http://localhost:8080';
+    const API_BASE = Session ? Session.apiBase : '';
 
     registerForm.addEventListener('submit', async (e) => {
         e.preventDefault();

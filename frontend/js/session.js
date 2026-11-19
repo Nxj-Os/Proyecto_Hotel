@@ -1,6 +1,9 @@
 (function () {
     const STORAGE_KEY = 'hotelUser';
-    const API_BASE = location.port === '8080' ? '' : 'http://localhost:8080';
+    const esLocal = location.protocol === 'file:' ||
+        location.hostname === 'localhost' ||
+        location.hostname === '127.0.0.1';
+    const API_BASE = esLocal && location.port !== '8080' ? 'http://localhost:8080' : '';
 
     function readRaw() {
         try {

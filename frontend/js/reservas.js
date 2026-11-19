@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const Session = window.HotelSession;
-    const API_BASE = Session ? Session.apiBase : 'http://localhost:8080';
+    const API_BASE = Session ? Session.apiBase : '';
     const usuarioSesion = Session ? Session.getUser() : null;
 
     const nombres = {
